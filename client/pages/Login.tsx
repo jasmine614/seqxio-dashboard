@@ -16,7 +16,7 @@ const Logo = () => (
     <div className="flex items-center gap-3">
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M24.7279 20.267C26.5455 18.0526 26.4428 14.9083 24.4819 12.8055C22.521 10.7027 19.5587 10.4284 17.3484 11.9923L14.0003 15.3404L16.6599 18L24.7279 20.267Z" fill="white"/>
-            <path d="M11.3401 14L7.27211 11.733C5.45455 13.9474 5.55724 17.0917 7.51813 19.1945C9.47903 21.2973 12.4413 21.5716 14.6516 20.0077L18.0003 16.659L11.3401 14Z" fill="white" fill-opacity="0.8"/>
+            <path d="M11.3401 14L7.27211 11.733C5.45455 13.9474 5.55724 17.0917 7.51813 19.1945C9.47903 21.2973 12.4413 21.5716 14.6516 20.0077L18.0003 16.659L11.3401 14Z" fill="white" fillOpacity="0.8"/>
         </svg>
         <span className="text-2xl font-semibold text-white">seqxio</span>
     </div>

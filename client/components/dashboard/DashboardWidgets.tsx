@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Calendar as NewCalendar } from "@/components/ui/new-calendar";
+import { Calendar as NewCalendar } from "@/components/ui/calendar";
 import {
   Sheet,
   SheetContent,

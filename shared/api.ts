@@ -1,32 +1,33 @@
-/**
- * Shared code between client and server
- * Useful to share types between client and server
- * and/or small pure JS functions that can be used on both client and server
- */
 
-export interface Project {
-  id: string;
-  name: string;
-  status: 'On Track' | 'At Risk' | 'Delayed' | 'Critical' | 'In Progress' | 'Completed';
-  team: string;
-  time: string;
-  day: number;
-  roads: string[];
+export interface DemoResponse {
+  message: string;
 }
 
-export type CreateProjectRequest = Omit<Project, 'id' | 'status'>;
-
-export interface Note {
+export interface Road {
   id: string;
+  name: string;
+  zone: string;
+  type: string;
+  priority: 'Low' | 'Normal' | 'High';
+  status: 'On Track' | 'Attention' | 'Critical';
+  lastActivity: string;
+  issues?: any[]; 
+  coverage?: any;
+}
+
+export type CreateRoadRequest = Omit<Road, 'id' | 'status' | 'lastActivity'>;
+
+export interface CalendarNote {
+  id: string;
+  date: string; // ISO date string
+  project: string;
+  team: string;
   title: string;
-  type: 'General' | 'Maintenance' | 'Safety';
-  date: string; // ISO string
-  project: string; // Project ID
-  team: string; // Team ID
+  type: string;
   details: string;
-  visibility: 'Team' | 'Everyone';
-  priority: 'Low' | 'Medium' | 'High';
+  visibility: string;
+  priority: 'Normal' | 'Important';
   notifyTeam: boolean;
 }
 
-export type CreateNoteRequest = Omit<Note, 'id'>;
+export type CreateCalendarNoteRequest = Omit<CalendarNote, 'id'>;

@@ -14,7 +14,6 @@ import TeamsPage from "./pages/Teams";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import Help from "./pages/Help";
-import Logout from "./pages/Logout";
 import LoginPage from "./pages/Login";
 import { NotificationsPage } from "./pages/NotificationsPage";
 import { AuthProvider, ProtectedRoute, useAuth } from "@/lib/auth";
@@ -42,7 +41,6 @@ const AppRoutes = () => {
             <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
             <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
             <Route path="/help" element={<ProtectedRoute><Help /></ProtectedRoute>} />
-            <Route path="/logout" element={<ProtectedRoute><Logout /></ProtectedRoute>} />
             <Route path="/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
         </Routes>

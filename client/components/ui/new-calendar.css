@@ -13,6 +13,7 @@
   padding: 0;
   height: 40px;
   background-color: transparent;
+  position: relative;
 }
 
 .react-calendar__tile:disabled {
@@ -57,6 +58,22 @@
   font-family: var(--font-sans);
 }
 
+
+/* --- Styling for notes --- */
+.react-calendar__tile.has-note--Normal abbr {
+    border: 1px solid #FDBA74; /* yellow-400 */
+}
+
+.react-calendar__tile.has-note--Important abbr {
+    border: 1px solid #F87171; /* red-400 */
+}
+
+.react-calendar__tile.has-note--Normal:hover abbr,
+.react-calendar__tile.has-note--Important:hover abbr {
+    border-width: 2px;
+}
+
+
 /* --- Styling for different day states --- */
 
 /* Selected day gets an outline */
@@ -66,15 +83,21 @@
 .react-calendar__tile--active abbr {
   background-color: transparent;
   color: hsl(var(--foreground));
-  border: 1px solid #5FBD92;
+  border: 1px solid #5FBD92; /* green */
 }
 
 /* Today's date has a green circle. This must override the selected styles. */
 .react-calendar__tile--now abbr {
   background: #5FBD92;
   color: white;
-  border: none;
+  border-color: transparent; /* Clear any other borders */
 }
+
+/* When today is also selected, it should have a border */
+.react-calendar__tile--now.react-calendar__tile--active abbr {
+    border: 2px solid #227D53; /* Darker green */
+}
+
 
 /*
   * HOVER & FOCUS STATES
@@ -102,7 +125,9 @@
     border: 2px solid #227D53;
 }
 
-/* Dates with notes get a green outline */
-.react-calendar__tile.has-note abbr {
-    border: 1px solid #5FBD92;
+/* When today is also selected and hovered */
+.react-calendar__tile--now.react-calendar__tile--active:enabled:hover abbr,
+.react-calendar__tile--now.react-calendar__tile--active:enabled:focus abbr {
+    border-width: 3px;
+    border-color: #227D53;
 }

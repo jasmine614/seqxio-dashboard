@@ -3,6 +3,7 @@ import { SearchCommand } from "@/components/search/SearchCommand";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { NotificationsPanel } from "@/components/notifications/NotificationsPanel";
 import { notificationsData } from '@/lib/notifications-data.tsx';
+import { UserDropdown } from './UserDropdown';
 
 export default function TopBar() {
   const [notifications, setNotifications] = useState(notificationsData);
@@ -36,20 +37,8 @@ export default function TopBar() {
           </PopoverContent>
         </Popover>
 
-        {/* User Profile */}
-        <div className="flex items-center gap-2">
-          <div className="relative w-[50px] h-[50px] bg-[#DBA6A9] rounded-full flex items-center justify-center overflow-hidden">
-            <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/ca5bf68d1ef14e4e6447c83be84e7cf96bc3ccc3?width=66"
-              alt="User avatar"
-              className="w-8 h-10 object-cover mt-1"
-            />
-          </div>
-          <div className="hidden md:block">
-            <p className="text-base font-semibold text-black tracking-tight">Ciara Thomas</p>
-            <p className="text-base font-light text-[#444] tracking-tight">cthomas@mail.com</p>
-          </div>
-        </div>
+        {/* User Profile Dropdown */}
+        <UserDropdown />
       </div>
     </div>
   );

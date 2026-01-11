@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Sidebar from "@/components/dashboard/Sidebar";
 import TopBar from "@/components/dashboard/TopBar";
 import { ProfileSettings } from '@/components/settings/ProfileSettings';
@@ -58,8 +59,26 @@ const sectionComponents = {
     security: SecuritySettings,
 }
 
+const availableSections = Object.keys(sectionComponents);
+
 export default function Settings() {
-  const [activeSection, setActiveSection] = useState('profile');
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const getActiveSectionFromURL = () => {
+      const tab = searchParams.get('tab');
+      return tab && availableSections.includes(tab) ? tab : 'profile';
+  }
+
+  const [activeSection, setActiveSection] = useState(getActiveSectionFromURL);
+
+  const handleSectionChange = (section) => {
+      setActiveSection(section);
+      setSearchParams({ tab: section });
+  };
+
+  useEffect(() => {
+      setActiveSection(getActiveSectionFromURL());
+  }, [searchParams]);
 
   const ActiveComponent = sectionComponents[activeSection];
 
@@ -80,7 +99,7 @@ export default function Settings() {
 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div className="md:col-span-1">
-                       <SettingsNav activeSection={activeSection} setActiveSection={setActiveSection} />
+                       <SettingsNav activeSection={activeSection} setActiveSection={handleSectionChange} />
                     </div>
                     <div className="md:col-span-3">
                         {ActiveComponent && <ActiveComponent />}

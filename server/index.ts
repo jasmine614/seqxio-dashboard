@@ -1,3 +1,4 @@
+
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
@@ -5,6 +6,10 @@ import { handleDemo } from "./routes/demo";
 import { createProject, getProjects, getProject } from "./routes/project";
 import { getRoads, createRoad } from "./routes/roads";
 import { getProjects as getCalendarProjects, getNotes, createNote, updateNote, deleteNote, getNote } from "./routes/calendar";
+
+
+const getCalendarNotes = getNotes;
+
 
 export function createServer() {
   const app = express();
@@ -33,9 +38,9 @@ export function createServer() {
   
   // Calendar routes
   app.get("/api/calendar/projects", getCalendarProjects);
-  app.get("/api/calendar/notes", getNotes);
-  app.post("/api/calendar/notes", createNote);
-  app.put("/api/calendar/notes/:id", updateNote);
+  app.get("/api/calendar-notes", getCalendarNotes);
+  app.post("/api/calendar-notes", createNote);
+  app.put("/api/calendar-notes/:id", updateNote);
   app.delete("/api/calendar/notes/:id", deleteNote);
   app.get("/api/notes/:id", getNote);
 

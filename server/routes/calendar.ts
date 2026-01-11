@@ -1,6 +1,8 @@
-import { RequestHandler } from "express";
-import { Project, Note } from "@shared/api";
 
+import { RequestHandler } from "express";
+import { Project, CalendarNote, CreateCalendarNoteRequest } from "@shared/api";
+
+// Mock data
 let projects: Project[] = [
     { id: '1', name: 'Westside Bulk Pickup', status: 'At Risk', team: 'Crew B', time: '9:30 AM', day: 25, roads: ['Pine Ln', 'Maple Dr'] },
     { id: '2', name: 'Eastside Recycling', status: 'On Track', team: 'Crew A', time: '8:00 AM', day: 25, roads: ['Oak St'] },
@@ -8,9 +10,9 @@ let projects: Project[] = [
     { id: '4', name: 'South Park Organics', status: 'Delayed', team: 'Crew D', time: '1:00 PM', day: 25, roads: ['Elm St', 'Birch Rd'] },
 ];
 
-let notes: Note[] = [
-    { id: '1', title: 'Overflow reported', type: 'General', day: 25, project: 'Westside Bulk Pickup', team: 'Crew B', time: '9:52 AM', visibility: 'Team', priority: 'Medium', details: 'An extra large pile of cardboard was left at the curb.' },
-];
+let notes: CalendarNote[] = [];
+
+// --- Route Handlers ---
 
 export const getProjects: RequestHandler = (req, res) => {
   res.json(projects);
@@ -21,11 +23,14 @@ export const getNotes: RequestHandler = (req, res) => {
 };
 
 export const createNote: RequestHandler = (req, res) => {
-  const newNote: Note = {
-    id: (notes.length + 1).toString(),
-    ...req.body,
+  const { body }: { body: CreateCalendarNoteRequest } = req;
+  
+  const newNote: CalendarNote = {
+    id: `note-${Date.now()}`,
+    ...body,
   };
-  notes.push(newNote);
+  
+  notes.unshift(newNote); // Add to the beginning of the array
   res.status(201).json(newNote);
 };
 
