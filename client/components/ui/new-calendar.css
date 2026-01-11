@@ -1,0 +1,108 @@
+
+.react-calendar {
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  width: 100%;
+}
+
+/* General tile setup */
+.react-calendar__tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  height: 40px;
+  background-color: transparent;
+}
+
+.react-calendar__tile:disabled {
+  color: hsl(var(--muted-foreground));
+  background: hsl(var(--muted));
+}
+
+/* Remove focus outline from tiles */
+.react-calendar__tile:focus {
+    outline: none;
+}
+
+/* Style for the number container */
+.react-calendar__tile abbr {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid transparent; /* Add transparent border to prevent layout shift on hover */
+    box-sizing: border-box; /* Ensure border is inside the dimensions */
+}
+
+/* Weekend style removal */
+.react-calendar__month-view__days__day--weekend {
+  color: inherit;
+}
+
+/* Navigation buttons */
+.react-calendar__navigation button:disabled {
+  color: hsl(var(--muted-foreground));
+  background: hsl(var(--muted));
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: hsl(var(--accent));
+}
+
+.react-calendar button {
+  font-family: var(--font-sans);
+}
+
+/* --- Styling for different day states --- */
+
+/* Selected day gets an outline */
+.react-calendar__tile--active {
+  background-color: transparent;
+}
+.react-calendar__tile--active abbr {
+  background-color: transparent;
+  color: hsl(var(--foreground));
+  border: 1px solid #5FBD92;
+}
+
+/* Today's date has a green circle. This must override the selected styles. */
+.react-calendar__tile--now abbr {
+  background: #5FBD92;
+  color: white;
+  border: none;
+}
+
+/*
+  * HOVER & FOCUS STATES
+*/
+
+/* For selected dates, keep tile background transparent and thicken the border */
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: transparent !important;
+}
+.react-calendar__tile--active:enabled:hover abbr,
+.react-calendar__tile--active:enabled:focus abbr {
+  border: 2px solid #5FBD92;
+}
+
+
+/* For today's date, keep tile background transparent and add a border to the circle */
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+    background: transparent !important;
+}
+.react-calendar__tile--now:enabled:hover abbr,
+.react-calendar__tile--now:enabled:focus abbr {
+    background: #5FBD92;
+    border: 2px solid #227D53;
+}
+
+/* Dates with notes get a green outline */
+.react-calendar__tile.has-note abbr {
+    border: 1px solid #5FBD92;
+}

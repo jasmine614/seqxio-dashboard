@@ -90,7 +90,7 @@ export default function Sidebar() {
     },
     {
       name: 'Team',
-      path: '/team',
+      path: '/teams',
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z" stroke="#7B9182" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -120,97 +120,91 @@ export default function Sidebar() {
         </svg>
       ),
     },
-    {
-      name: 'Logout',
-      path: '/logout',
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 17L19.5858 13.4142C20.3668 12.6332 20.3668 11.3668 19.5858 10.5858L16 7" stroke="#7B9182" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M8 21C5.79086 21 4 19.2091 4 17L4 7C4 4.79086 5.79086 3 8 3" stroke="#7B9182" strokeWidth="2" strokeLinecap="round"/>
-          <path d="M9 12L20 12" stroke="#7B9182" strokeWidth="2" strokeLinecap="round"/>
-        </svg>
-      ),
-    },
+    
   ];
 
   return (
-    <aside className="flex flex-col justify-between w-64 lg:w-72 h-screen p-6 bg-[#F7F7F7] rounded-[25px] overflow-y-auto">
-      {/* Logo */}
-      <div className="flex items-center gap-2 py-4 mb-8">
-        <img
-          src="https://api.builder.io/api/v1/image/assets/TEMP/c31da1800fe12762e307cd470e17dbf0b0637ed7?width=360"
-          alt="Seqxio Logo"
-          className="w-[180px] h-[63px]"
-        />
-      </div>
-
-      {/* Menu Section */}
-      <nav className="flex-1">
-        <div className="mb-6">
-          <h3 className="text-[#969696] text-base font-medium mb-4 tracking-tight">MENU</h3>
-          <ul className="space-y-4">
-            {menuItems.map((item) => (
-              <li key={item.path}>
-                <Link
-                  to={item.path}
-                  className={`flex items-center gap-3 ${
-                    isActive(item.path)
-                      ? 'text-black font-medium'
-                      : 'text-[#7B9182] hover:text-black transition-colors'
-                  }`}
-                >
-                  <span className="flex-shrink-0">{item.icon}</span>
-                  <span className="text-xl tracking-tight">{item.name}</span>
-                  {item.badge && (
-                    <span className="ml-auto px-2 py-0.5 text-[10px] font-medium text-white bg-[#155234] rounded-[5px]">
-                      {item.badge}
-                    </span>
-                  )}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* General Section */}
+    <aside className="w-64 lg:w-72 bg-[#F7F7F7] rounded-[25px] sticky top-0 h-screen">
+      <div className="flex flex-col justify-between h-full p-6 overflow-y-auto">
         <div>
-          <h3 className="text-[#969696] text-base font-medium mb-4 tracking-tight">GENERAL</h3>
-          <ul className="space-y-4">
-            {generalItems.map((item) => (
-              <li key={item.path}>
-                <Link
-                  to={item.path}
-                  className="flex items-center gap-3 text-[#7B9182] hover:text-black transition-colors"
-                >
-                  <span className="flex-shrink-0">{item.icon}</span>
-                  <span className="text-xl tracking-tight">{item.name}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
+          {/* Logo */}
+          <div className="flex items-center gap-2 py-4 mb-8">
+            <img
+              src="/Charlotte_NC_city_logo.svg.png"
+              alt="Charlotte NC City Logo"
+              className="w-[180px] h-auto"
+            />
+          </div>
 
-      {/* Mobile App Banner */}
-      <div className="mt-6 p-4 rounded-[15px] bg-gradient-to-br from-[#155234] to-[#227D53] text-white relative overflow-hidden"
-        style={{
-          backgroundImage: "url('https://api.builder.io/api/v1/image/assets/TEMP/91726b346faf46be49ba1c27a3286f039812019e?width=432')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="relative z-10">
-          <svg className="w-6 h-6 mb-2" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="25" height="25" rx="12.5" fill="white"/>
-            <path d="M12.5 20.8333L10.0295 18.3997H6.60025V14.9705L4.16663 12.5L6.60025 10.0295V6.60025H10.0295L12.5 4.16663L14.9705 6.60025H18.3997V10.0295L20.8333 12.5L18.3997 14.9705V18.3997H14.9705L12.5 20.8333ZM12.5 18.7684L14.3436 16.9247H16.9247V14.3436L18.7684 12.5L16.9247 10.6563V8.07518H14.3436L12.5 6.23152L10.6563 8.07518H8.07518V10.6563L6.23152 12.5L8.07518 14.3436V16.9247H10.6563L12.5 18.7684ZM10.3429 15.6342L12.5 14.3252L14.657 15.6342L14.0855 13.1821L16.0029 11.5228L13.4771 11.32L12.5 8.99701L11.5228 11.32L8.99701 11.5228L10.9144 13.1821L10.3429 15.6342Z" fill="#155234"/>
-          </svg>
-          <h4 className="text-xl font-semibold mb-1 tracking-tight">
-            <span className="font-semibold">Download</span> our Mobile App
-          </h4>
-          <p className="text-[13px] mb-4 tracking-tight">Stay on track.</p>
-          <button className="w-full px-8 py-2 bg-[#155234] rounded-[25px] text-sm font-medium tracking-tight hover:bg-[#1a6642] transition-colors">
-            Download
-          </button>
+          {/* Menu Section */}
+          <nav className="flex-1">
+            <div className="mb-6">
+              <h3 className="text-[#969696] text-base font-medium mb-4 tracking-tight">MENU</h3>
+              <ul className="space-y-4">
+                {menuItems.map((item) => (
+                  <li key={item.path}>
+                    <Link
+                      to={item.path}
+                      className={`flex items-center gap-3 ${
+                        isActive(item.path)
+                          ? 'text-black font-medium'
+                          : 'text-[#7B9182] hover:text-black transition-colors'
+                      }`}
+                    >
+                      <span className="flex-shrink-0">{item.icon}</span>
+                      <span className="text-xl tracking-tight">{item.name}</span>
+                      {item.badge && (
+                        <span className="ml-auto px-2 py-0.5 text-[10px] font-medium text-white bg-[#155234] rounded-[5px]">
+                          {item.badge}
+                        </span>
+                      )}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* General Section */}
+            <div>
+              <h3 className="text-[#969696] text-base font-medium mb-4 tracking-tight">GENERAL</h3>
+              <ul className="space-y-4">
+                {generalItems.map((item) => (
+                  <li key={item.path}>
+                    <Link
+                      to={item.path}
+                      className="flex items-center gap-3 text-[#7B9182] hover:text-black transition-colors"
+                    >
+                      <span className="flex-shrink-0">{item.icon}</span>
+                      <span className="text-xl tracking-tight">{item.name}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </nav>
+        </div>
+
+        {/* Mobile App Banner */}
+        <div className="mt-6 p-4 rounded-[15px] bg-gradient-to-br from-[#155234] to-[#227D53] text-white relative overflow-hidden"
+          style={{
+            backgroundImage: "url('https://api.builder.io/api/v1/image/assets/TEMP/91726b346faf46be49ba1c27a3286f039812019e?width=432')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div className="relative z-10">
+            <svg className="w-6 h-6 mb-2" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="25" height="25" rx="12.5" fill="white"/>
+              <path d="M12.5 20.8333L10.0295 18.3997H6.60025V14.9705L4.16663 12.5L6.60025 10.0295V6.60025H10.0295L12.5 4.16663L14.9705 6.60025H18.3997V10.0295L20.8333 12.5L18.3997 14.9705V18.3997H14.9705L12.5 20.8333ZM12.5 18.7684L14.3436 16.9247H16.9247V14.3436L18.7684 12.5L16.9247 10.6563V8.07518H14.3436L12.5 6.23152L10.6563 8.07518H8.07518V10.6563L6.23152 12.5L8.07518 14.3436V16.9247H10.6563L12.5 18.7684ZM10.3429 15.6342L12.5 14.3252L14.657 15.6342L14.0855 13.1821L16.0029 11.5228L13.4771 11.32L12.5 8.99701L11.5228 11.32L8.99701 11.5228L10.9144 13.1821L10.3429 15.6342Z" fill="#155234"/>
+            </svg>
+            <h4 className="text-xl font-semibold mb-1 tracking-tight">
+              <span className="font-semibold">Download</span> our Mobile App
+            </h4>
+            <p className="text-[13px] mb-4 tracking-tight">Stay on track.</p>
+            <button className="w-full px-8 py-2 bg-[#155234] rounded-[25px] text-sm font-medium tracking-tight hover:bg-[#1a6642] transition-colors">
+              Download
+            </button>
+          </div>
         </div>
       </div>
     </aside>
