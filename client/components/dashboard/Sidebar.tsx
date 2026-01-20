@@ -1,4 +1,6 @@
+
 import { Link, useLocation } from 'react-router-dom';
+import { MapPinIcon } from './MapPinIcon'; // Assuming you saved the icon here
 
 export default function Sidebar() {
   const location = useLocation();
@@ -20,6 +22,12 @@ export default function Sidebar() {
           </defs>
         </svg>
       ),
+      badge: null,
+    },
+    {
+      name: 'Map',
+      path: '/map',
+      icon: <MapPinIcon />,
       badge: null,
     },
     {
@@ -145,12 +153,13 @@ export default function Sidebar() {
                   <li key={item.path}>
                     <Link
                       to={item.path}
-                      className={`flex items-center gap-3 ${
+                      className={`flex items-center gap-3 relative ${
                         isActive(item.path)
                           ? 'text-black font-medium'
                           : 'text-[#7B9182] hover:text-black transition-colors'
                       }`}
                     >
+                      {isActive(item.path) && <div className="absolute -left-6 w-1 h-full bg-gradient-primary rounded-r-md"></div>}
                       <span className="flex-shrink-0">{item.icon}</span>
                       <span className="text-xl tracking-tight">{item.name}</span>
                       {item.badge && (
@@ -172,8 +181,13 @@ export default function Sidebar() {
                   <li key={item.path}>
                     <Link
                       to={item.path}
-                      className="flex items-center gap-3 text-[#7B9182] hover:text-black transition-colors"
+                      className={`flex items-center gap-3 relative ${
+                        isActive(item.path)
+                          ? 'text-black font-medium'
+                          : 'text-[#7B9182] hover:text-black transition-colors'
+                      }`}
                     >
+                      {isActive(item.path) && <div className="absolute -left-6 w-1 h-full bg-gradient-primary rounded-r-md"></div>}
                       <span className="flex-shrink-0">{item.icon}</span>
                       <span className="text-xl tracking-tight">{item.name}</span>
                     </Link>
@@ -195,7 +209,7 @@ export default function Sidebar() {
           <div className="relative z-10">
             <svg className="w-6 h-6 mb-2" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="25" height="25" rx="12.5" fill="white"/>
-              <path d="M12.5 20.8333L10.0295 18.3997H6.60025V14.9705L4.16663 12.5L6.60025 10.0295V6.60025H10.0295L12.5 4.16663L14.9705 6.60025H18.3997V10.0295L20.8333 12.5L18.3997 14.9705V18.3997H14.9705L12.5 20.8333ZM12.5 18.7684L14.3436 16.9247H16.9247V14.3436L18.7684 12.5L16.9247 10.6563V8.07518H14.3436L12.5 6.23152L10.6563 8.07518H8.07518V10.6563L6.23152 12.5L8.07518 14.3436V16.9247H10.6563L12.5 18.7684ZM10.3429 15.6342L12.5 14.3252L14.657 15.6342L14.0855 13.1821L16.0029 11.5228L13.4771 11.32L12.5 8.99701L11.5228 11.32L8.99701 11.5228L10.9144 13.1821L10.3429 15.6342Z" fill="#155234"/>
+              <path d="M12.5 20.8333L10.0295 18.3997H6.60025V14.9705L4.16663 12.5L6.60025 10.0295V6.60025H10.0295L12.5 4.16663L14.9705 6.60025H18.3997V10.0295L20.8333 12.5L18.3997 14.9705V18.3997H14.3436L12.5 18.7684ZM12.5 18.7684L14.3436 16.9247H16.9247V14.3436L18.7684 12.5L16.9247 10.6563V8.07518H14.3436L12.5 6.23152L10.6563 8.07518H8.07518V10.6563L6.23152 12.5L8.07518 14.3436V16.9247H10.6563L12.5 18.7684ZM10.3429 15.6342L12.5 14.3252L14.657 15.6342L14.0855 13.1821L16.0029 11.5228L13.4771 11.32L12.5 8.99701L11.5228 11.32L8.99701 11.5228L10.9144 13.1821L10.3429 15.6342Z" fill="#155234"/>
             </svg>
             <h4 className="text-xl font-semibold mb-1 tracking-tight">
               <span className="font-semibold">Download</span> our Mobile App

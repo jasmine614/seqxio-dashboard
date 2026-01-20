@@ -23,7 +23,7 @@ export function RoadDetailsPanel({ road, isOpen, onOpenChange }: RoadDetailsPane
 
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full sm:max-w-md">
+      <SheetContent className="w-full sm:max-w-md flex flex-col">
         <SheetHeader className="mb-6">
           <div className="flex justify-between items-start">
             <div>
@@ -34,7 +34,7 @@ export function RoadDetailsPanel({ road, isOpen, onOpenChange }: RoadDetailsPane
           </div>
         </SheetHeader>
         
-        <div className="space-y-8">
+        <div className="flex-1 overflow-y-auto -mx-6 px-6 space-y-8">
             {/* Status Summary */}
             <div>
                 <h4 className="font-semibold mb-2">Status</h4>

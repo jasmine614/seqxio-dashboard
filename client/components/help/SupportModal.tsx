@@ -11,11 +11,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export const SupportModal = ({ isOpen, onOpenChange }) => {
-    const [issueType, setIssueType] = useState("bug");
+export const SupportModal = ({ isOpen, onOpenChange, defaultType = 'question' }) => {
+    const [issueType, setIssueType] = useState(defaultType);
     const [description, setDescription] = useState("");
+
+    useEffect(() => {
+        if (isOpen) {
+            setIssueType(defaultType);
+        }
+    }, [isOpen, defaultType]);
 
     const handleSubmit = () => {
         console.log("Support request submitted:", { issueType, description });

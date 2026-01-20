@@ -19,7 +19,13 @@ type UserRole = 'viewer' | 'dispatcher' | 'admin';
 export default function Help() {
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
+  const [supportType, setSupportType] = useState('question');
   const [userRole] = useState<UserRole>('viewer'); // Mock user role
+
+  const handleSupportClick = (type: string) => {
+    setSupportType(type);
+    setIsSupportModalOpen(true);
+  };
 
   const quickHelpCards = [
     {
@@ -229,13 +235,13 @@ export default function Help() {
             {/* Contact & Support Section */}
             <section>
               <h2 className="text-2xl font-semibold mb-4">Contact & Support</h2>
-              <ContactCard onContact={() => setIsSupportModalOpen(true)} />
+              <ContactCard onContact={handleSupportClick} />
             </section>
           </div>
         </div>
       </main>
       <FeedbackModal isOpen={isFeedbackModalOpen} onOpenChange={setIsFeedbackModalOpen} />
-      <SupportModal isOpen={isSupportModalOpen} onOpenChange={setIsSupportModalOpen} />
+      <SupportModal isOpen={isSupportModalOpen} onOpenChange={setIsSupportModalOpen} defaultType={supportType} />
     </div>
   );
 }

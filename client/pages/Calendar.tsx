@@ -5,7 +5,6 @@ import TopBar from "@/components/dashboard/TopBar";
 import { CalendarHeader } from "@/components/calendar/CalendarHeader";
 import { DateNavigator } from "@/components/calendar/DateNavigator";
 import { CalendarFilters } from "@/components/calendar/CalendarFilters";
-import { MonthView } from "@/components/calendar/MonthView";
 import { WeekView } from "@/components/calendar/WeekView";
 import { DayView } from "@/components/calendar/DayView";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet";
@@ -21,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { X, Pencil, Trash2 } from 'lucide-react';
 import { Project, Note, CreateNoteRequest } from '@shared/api';
+import { Calendar } from '@/components/ui/calendar';
 
 const fetchProjects = async (): Promise<Project[]> => {
   const res = await fetch('/api/calendar/projects');
@@ -75,33 +75,18 @@ const deleteNote = async (noteId: string): Promise<void> => {
     }
 };
 
-const generateDaysInMonth = (projects: Project[] = [], notes: Note[] = []) => {
-    const days = Array.from({ length: 31 }, (_, i) => ({ day: i + 1, projects: [], notes: [] }));
-    projects.forEach(p => {
-      if (p.day > 0 && p.day <= 31) {
-        days[p.day - 1].projects.push(p);
-      }
-    });
-    notes.forEach(n => {
-      if (n.day > 0 && n.day <= 31) {
-        days[n.day - 1].notes.push(n);
-      }
-    });
-    return days;
-}
-
 const getFullDate = (day) => {
-    const date = new Date(2023, 10, day);
+    const date = new Date(day);
     return date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 }
 
-export default function Calendar() {
+export default function CalendarPage() {
   const queryClient = useQueryClient();
   const [view, setView] = useState('month');
   const [contentType, setContentType] = useState('both');
   const [currentDate, setCurrentDate] = useState(new Date());
   const [isDayPanelOpen, setIsDayPanelOpen] = useState(false);
-  const [selectedDay, setSelectedDay] = useState(null);
+  const [selectedDay, setSelectedDay] = useState<Date | null>(null);
   const [isAddNoteModalOpen, setAddNoteModalOpen] = useState(false);
   const [isEditNoteModalOpen, setEditNoteModalOpen] = useState(false);
   const [isDeleteNoteAlertOpen, setDeleteNoteAlertOpen] = useState(false);
@@ -132,16 +117,14 @@ export default function Calendar() {
     },
   });
 
-  const daysInMonth = generateDaysInMonth(projects, notes);
-
-  const handleDayClick = (day) => {
+  const handleDayClick = (day: Date) => {
       setSelectedDay(day);
       setIsDayPanelOpen(true);
   }
 
   const handleAddNoteClick = (project: Project | null = null) => {
       setNoteData({
-          date: selectedDay ? getFullDate(selectedDay.day) : new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }),
+          date: selectedDay ? getFullDate(selectedDay) : new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }),
           project: project ? project.name : '',
           team: project ? project.team : ''
       });
@@ -196,6 +179,9 @@ export default function Calendar() {
     }
   }
 
+  const selectedDayProjects = selectedDay ? projects.filter(p => new Date(p.startDate).toDateString() === selectedDay.toDateString()) : [];
+  const selectedDayNotes = selectedDay ? notes.filter(n => new Date(n.date).toDateString() === selectedDay.toDateString()) : [];
+
   return (
     <div className="flex gap-4 min-h-screen bg-white p-4">
       <div className="hidden lg:block">
@@ -208,7 +194,9 @@ export default function Calendar() {
           <DateNavigator currentDate={currentDate} onPrev={handlePrev} onNext={handleNext} />
           <CalendarFilters contentType={contentType} onContentTypeChange={setContentType} />
           
-          {view === 'month' && <MonthView daysInMonth={daysInMonth} onDayClick={handleDayClick} />}
+          <div className="calendar-page-container">
+            {view === 'month' && <Calendar onClickDay={handleDayClick} value={currentDate} />}
+          </div>
           {view === 'week' && <WeekView currentDate={currentDate} projects={projects} notes={notes} />}
           {view === 'day' && <DayView currentDate={currentDate} projects={projects} notes={notes} />}
         </div>
@@ -218,7 +206,7 @@ export default function Calendar() {
                 {selectedDay && (
                   <>
                     <SheetHeader className="pr-12">
-                        <SheetTitle className="text-xl">{getFullDate(selectedDay.day)}</SheetTitle>
+                        <SheetTitle className="text-xl">{getFullDate(selectedDay)}</SheetTitle>
                          <SheetClose asChild>
                             <Button variant="ghost" className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"><X className="h-6 w-6" /></Button>
                         </SheetClose>
@@ -227,18 +215,15 @@ export default function Calendar() {
                         <Card>
                              <CardHeader className="flex flex-row items-center justify-between"><CardTitle>Scheduled Projects</CardTitle><Button size="sm" onClick={() => handleAddNoteClick()}>Add Note</Button></CardHeader>
                             <CardContent>
-                                {selectedDay.projects.length > 0 ? (
+                                {selectedDayProjects.length > 0 ? (
                                     <div className="space-y-4">
-                                        {selectedDay.projects.map(p => (
+                                        {selectedDayProjects.map(p => (
                                             <div key={p.id} className="p-4 rounded-lg border bg-white">
                                                 <div className="flex justify-between">
                                                     <p className="font-semibold">{p.name}</p>
                                                     <Badge>{p.status}</Badge>
                                                 </div>
-                                                <p className="text-sm text-gray-500">{p.team} · {p.time}</p>
-                                                <div className="flex flex-wrap gap-1 mt-1">
-                                                    {p.roads.map(r => <Badge key={r} variant="secondary">{r}</Badge>)}
-                                                </div>
+                                                <p className="text-sm text-gray-500">{p.assignee}</p>
                                                 <div className="flex gap-2 mt-2">
                                                     <Button variant="outline" size="sm">View details</Button>
                                                     <Button variant="outline" size="sm" onClick={() => handleAddNoteClick(p)}>Add note</Button>
@@ -254,9 +239,9 @@ export default function Calendar() {
                         <Card>
                             <CardHeader><CardTitle>Notes</CardTitle></CardHeader>
                             <CardContent>
-                                {selectedDay.notes.length > 0 ? (
+                                {selectedDayNotes.length > 0 ? (
                                     <div className="space-y-4">
-                                        {selectedDay.notes.map(n => (
+                                        {selectedDayNotes.map(n => (
                                             <div key={n.id} className="p-4 rounded-lg border bg-white">
                                                 <p className="font-semibold">{n.title}</p>
                                                 <p className="text-sm text-gray-500">{n.type} · {n.project} · {n.team}</p>
@@ -384,7 +369,7 @@ export default function Calendar() {
                             </div>
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="date-edit" className="text-right">Date</Label>
-                                <Input id="date-edit" value={getFullDate(selectedNote.day)} readOnly className="col-span-3" />
+                                <Input id="date-edit" value={getFullDate(selectedNote.date)} readOnly className="col-span-3" />
                             </div>
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="project-edit" className="text-right">Linked Project</Label>

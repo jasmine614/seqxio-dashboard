@@ -12,7 +12,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:client && npm run build:server",
+    "build": "pnpm build:client && pnpm build:server",
     "build:client": "vite build",
     "build:server": "vite build --config vite.config.server.ts",
     "start": "node dist/server/node-build.mjs",
@@ -21,6 +21,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@arcgis/core": "^4.34.8",
     "@types/react-calendar": "^4.1.0",
     "dotenv": "^17.2.1",
     "echarts": "^6.0.0",
@@ -28,6 +29,7 @@
     "express": "^5.1.0",
     "leaflet": "^1.9.4",
     "react-calendar": "^6.0.0",
+    "react-dropzone": "^14.3.8",
     "react-leaflet": "^5.0.0",
     "react-query": "^3.39.3",
     "use-debounce": "^10.1.0",

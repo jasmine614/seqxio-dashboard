@@ -6,13 +6,12 @@ import ProjectProgress from "@/components/dashboard/ProjectProgress";
 import DatePickerWithRange from "@/components/dashboard/DateRangePicker";
 import {
   InteractiveMap,
-  Calendar,
+  CalendarWidget as Calendar,
   RecentMedia,
   RoadsList,
   TimeTracker,
 } from "@/components/dashboard/DashboardWidgets";
 import { AddProjectModal } from "@/components/dashboard/AddProjectModal";
-import { UploadMediaModal, MediaFile } from "@/components/dashboard/UploadMediaModal";
 
 const INITIAL_PROJECT_PROGRESS = [
   { value: 10, name: 'Not Started' },
@@ -28,19 +27,10 @@ const INITIAL_METRICS = {
     endedProjectsIncrease: 6,
 }
 
-const INITIAL_MEDIA_ITEMS: MediaFile[] = [
-    { id: '1', url: 'https://images.unsplash.com/photo-1622396481328-9c1b782dd46e?q=80&w=2940&auto=format&fit=crop', type: 'photo', name: 'photo-1.jpg', size: '4.1 MB' },
-    { id: '2', url: 'https://plus.unsplash.com/premium_photo-1664303499354-9533d1c480d9?q=80&w=2832&auto=format&fit=crop', type: 'photo', name: 'photo-2.jpg', size: '3.2 MB' },
-    { id: '3', url: 'https://images.unsplash.com/photo-1599580506462-801b69417038?q=80&w=2864&auto=format&fit=crop', type: 'photo', name: 'photo-3.jpg', size: '5.8 MB' },
-    { id: '4', url: 'https://plus.unsplash.com/premium_photo-1661413341369-8086a6a2a47a?q=80&w=2940&auto=format&fit=crop', type: 'photo', name: 'photo-4.jpg', size: '2.5 MB' },
-];
-
 export default function Dashboard() {
   const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
-  const [isUploadMediaModalOpen, setIsUploadMediaModalOpen] = useState(false);
   const [projectProgressData, setProjectProgressData] = useState(INITIAL_PROJECT_PROGRESS);
   const [metrics, setMetrics] = useState(INITIAL_METRICS);
-  const [mediaItems, setMediaItems] = useState<MediaFile[]>(INITIAL_MEDIA_ITEMS);
 
   const handleProjectCreate = (newProject: any) => {
     // 1. Update KPIs
@@ -59,10 +49,6 @@ export default function Dashboard() {
       );
     });
   };
-  
-  const handleUploadComplete = (newMedia: MediaFile[]) => {
-      setMediaItems(prevMedia => [...newMedia, ...prevMedia]);
-  }
 
   return (
     <div className="flex gap-4 min-h-screen bg-white p-4">
@@ -85,7 +71,7 @@ export default function Dashboard() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center gap-4">
-              <DatePickerWithRange />
+              {/* <DatePickerWithRange /> */}
               <button
                 className="px-5 py-3 bg-gradient-primary text-white rounded-[15px] font-medium flex items-center justify-center gap-2 hover:opacity-90 transition-opacity whitespace-nowrap"
                 onClick={() => setIsAddProjectModalOpen(true)}
@@ -110,10 +96,7 @@ export default function Dashboard() {
               <ProjectProgress data={projectProgressData} />
               <InteractiveMap />
               <Calendar />
-              <RecentMedia 
-                mediaItems={mediaItems}
-                onUploadClick={() => setIsUploadMediaModalOpen(true)} 
-              />
+              <RecentMedia />
             </div>
 
             <div className="flex flex-col gap-4 w-full xl:w-[384px] flex-shrink-0">
@@ -128,12 +111,6 @@ export default function Dashboard() {
         isOpen={isAddProjectModalOpen}
         onOpenChange={setIsAddProjectModalOpen}
         onProjectCreate={handleProjectCreate}
-      />
-
-      <UploadMediaModal
-        isOpen={isUploadMediaModalOpen}
-        onOpenChange={setIsUploadMediaModalOpen}
-        onUploadComplete={handleUploadComplete}
       />
 
     </div>

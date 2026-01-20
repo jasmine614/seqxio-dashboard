@@ -10,7 +10,11 @@ let projects: Project[] = [
     { id: '4', name: 'South Park Organics', status: 'Delayed', team: 'Crew D', time: '1:00 PM', day: 25, roads: ['Elm St', 'Birch Rd'] },
 ];
 
-let notes: CalendarNote[] = [];
+// RESTORED MOCK DATA: Please note that this data has been restored from memory and may not be completely accurate.
+let notes: CalendarNote[] = [
+    { id: 'note-1', day: 25, title: 'Team meeting', description: 'Discuss project status' },
+    { id: 'note-2', day: 25, title: 'Equipment maintenance', description: 'Check all vehicles' },
+];
 
 // --- Route Handlers ---
 

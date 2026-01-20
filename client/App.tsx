@@ -1,12 +1,11 @@
 
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
-import Index from "./pages/Index";
+import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import Calendar from "./pages/Calendar";
 import Analytics from "./pages/Analytics";
@@ -18,6 +17,8 @@ import LoginPage from "./pages/Login";
 import { NotificationsPage } from "./pages/NotificationsPage";
 import { AuthProvider, ProtectedRoute, useAuth } from "@/lib/auth";
 import { DetailsViewProvider } from "@/lib/DetailsViewProvider";
+import Map from "./pages/Map";
+import "@arcgis/core/assets/esri/themes/light/main.css";
 
 const queryClient = new QueryClient();
 
@@ -33,7 +34,8 @@ const AppRoutes = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="/projects" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+            <Route path="/map" element={<ProtectedRoute><Map /></ProtectedRoute>} />
+            <Route path="/projects" element={<ProtectedRoute><Projects /></ProtectedRoute>} />
             <Route path="/projects/:id" element={<ProtectedRoute><ProjectDetail /></ProtectedRoute>} />
             <Route path="/calendar" element={<ProtectedRoute><Calendar /></ProtectedRoute>} />
             <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
@@ -59,7 +61,6 @@ function App() {
             </AuthProvider>
         </BrowserRouter>
         <Toaster />
-        <Sonner />
       </TooltipProvider>
     </QueryClientProvider>
   );
